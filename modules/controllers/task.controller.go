@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 
@@ -16,13 +17,32 @@ func CreateTask(c *gin.Context) {
 		return
 	}
 
-	result := TaskService.CreateTask(&newTask)
+	result := TaskService.Create(&newTask)
 
 	c.IndentedJSON(http.StatusCreated, result)
 }
 
-func FindTaskById(c *gin.Context) {
-	id := c.Param("id")
+func ListTasks(c *gin.Context) {
+	tasks := TaskService.Read()
 
-	c.JSON(http.StatusOK, gin.H{"id": id})
+	c.IndentedJSON(http.StatusOK, tasks)
+}
+
+func UpdateTask(c *gin.Context) {
+  var task model.Task
+
+	if err := c.BindJSON(&task); err != nil {
+		c.AbortWithError(http.StatusBadRequest, err)
+	}
+
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	updatedTask := TaskService.Update(id, &task)
+
+	c.IndentedJSON(http.StatusOK, updatedTask)
+}
+
+func DeleteTask(c *gin.Context) {
+	id := c.Param("id")
+	TaskService.Delete(id)
 }
