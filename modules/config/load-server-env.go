@@ -1,15 +1,12 @@
 package config
 
-import (
-	"strconv"
+import "github.com/spf13/viper"
 
-	"github.com/spf13/viper"
-)
-
-func ServerHost() string {
-	return viper.GetString("HOST")
+func serverEnv() {
+	APP["host"] = viper.GetString("HOST")
+	APP["port"] = viper.GetString("PORT")
 }
 
-func ServerPort() (int, error) {
-	return strconv.Atoi(viper.GetString("PORT"))
+func init() {
+	loadList = append(loadList, serverEnv)
 }

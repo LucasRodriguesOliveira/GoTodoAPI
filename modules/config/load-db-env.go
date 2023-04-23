@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func LoadDBEnv() map[string]string {
+func dbEnv() {
 	var (
 		host string = viper.GetString("DB_HOST")
 		port string = viper.GetString("DB_PORT")
@@ -15,17 +15,12 @@ func LoadDBEnv() map[string]string {
 		user string = viper.GetString("DB_USER")
 	)
 
-	var dsn string = fmt.Sprintf(
+	DSN = fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s",
 		host, user, pass, name, port,
 	)
+}
 
-	return map[string]string{
-		"host": host,
-		"port": port,
-		"name": name,
-		"pass": pass,
-		"user": user,
-		"dsn":  dsn,
-	}
+func init() {
+	loadList = append(loadList, dbEnv)
 }

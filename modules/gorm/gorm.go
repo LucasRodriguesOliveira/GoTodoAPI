@@ -14,7 +14,7 @@ var (
 )
 
 func StartUp() {
-  var dsn string = GO_ENV.LoadDBEnv()["dsn"]
+  var dsn string = GO_ENV.DSN
 
 	conn, err := gorm.Open(pg.Open(dsn), &gorm.Config{})
 
