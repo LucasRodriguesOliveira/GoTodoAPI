@@ -1,13 +1,13 @@
-package services
+package task
 
 import (
 	"log"
 
-	"GoTodoAPI/modules/model"
+	"GoTodoAPI/modules/model/task"
 	"GoTodoAPI/modules/gorm"
 )
 
-func Create(task *model.Task) *model.Task {
+func Create(task *task.Schema) *task.Schema {
 	result := gorm.DB.Create(task)
 
 	if result.Error != nil {
@@ -17,8 +17,8 @@ func Create(task *model.Task) *model.Task {
 	return task
 }
 
-func Read() []model.Task {
-  var tasks []model.Task
+func Read() []task.Schema {
+  var tasks []task.Schema
 
 	result := gorm.DB.Find(&tasks)
 
@@ -29,7 +29,7 @@ func Read() []model.Task {
 	return tasks
 }
 
-func Update(id int, oldTask *model.Task) *model.Task {
+func Update(id int, oldTask *task.Schema) *task.Schema {
 	oldTask.ID = uint(id)
 
 	result := gorm.DB.Save(oldTask)
@@ -42,5 +42,5 @@ func Update(id int, oldTask *model.Task) *model.Task {
 }
 
 func Delete(id string) {
-	gorm.DB.Delete(&model.Task{}, id)
+	gorm.DB.Delete(&task.Schema{}, id)
 }

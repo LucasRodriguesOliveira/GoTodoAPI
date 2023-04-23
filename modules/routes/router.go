@@ -1,9 +1,7 @@
-package modules
+package routes
 
 import (
 	"github.com/gin-gonic/gin"
-
-	"GoTodoAPI/modules/routes"
 )
 
 func init() {
@@ -16,5 +14,6 @@ var (
 )
 
 func mapRoutes() {
-  routes.TaskRoutes(Router)
+  taskRoutes(Router)
+	userRoutes(Router)
 }

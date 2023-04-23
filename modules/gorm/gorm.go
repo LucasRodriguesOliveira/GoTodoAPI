@@ -6,7 +6,9 @@ import (
 	"log"
 
 	GO_ENV "GoTodoAPI/modules/config"
-	"GoTodoAPI/modules/model"
+
+	"GoTodoAPI/modules/model/task"
+	"GoTodoAPI/modules/model/user"
 )
 
 var (
@@ -22,7 +24,10 @@ func StartUp() {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	conn.AutoMigrate(&model.Task{})
+	conn.AutoMigrate(
+		&task.Schema{},
+		&user.Schema{},
+	)
 
 	DB = conn
 }
